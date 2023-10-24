@@ -15,31 +15,33 @@ class Solution
     
     int NumberOfPath(int a, int b)
     {
-        vector<vector<int>> dp(a,vector<int> (b,-1));
+        vector<int> dp(b,0);
         
         for(int i=0;i<a;i++)
         {
+             vector<int> cur(b,-1);
             for(int j=0;j<b;j++)
             {
                 if(i==0 && j==0)
-                dp[i][j]=1;
+                cur[j]=1;
                 else
                 {
                     int up=0,left=0;
                     if(i>0)
-                    up=dp[i-1][j];
+                    up=dp[j];
                     if(j>0)
-                    left=dp[i][j-1];
+                    left=cur[j-1];
                     
-                    dp[i][j]=left+up;
+                    cur[j]=left+up;
                 }
             }
+            dp=cur;
         }
         
         
         
         
-        return dp[a-1][b-1];
+        return dp[b-1];
     }
 };
 
