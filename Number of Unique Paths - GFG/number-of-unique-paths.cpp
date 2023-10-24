@@ -11,30 +11,35 @@ class Solution
     public:
     //Function to find total number of unique paths.
     
-    int func(int m,int n,vector<vector<int>> &dp)
-    {
-        if(m==0 && n==0)
-        return 1;
-        
-        if(m<0 || n<0)
-        return 0;
-        
-        if(dp[m][n]!=-1)
-        return dp[m][n];
-        
-        int up=func(m-1,n,dp);
-        int left=func(m,n-1,dp);
-        
-        return dp[m][n]=up+left;
-        
-    }
     
     
     int NumberOfPath(int a, int b)
     {
         vector<vector<int>> dp(a,vector<int> (b,-1));
         
-        return func(a-1,b-1,dp);
+        for(int i=0;i<a;i++)
+        {
+            for(int j=0;j<b;j++)
+            {
+                if(i==0 && j==0)
+                dp[i][j]=1;
+                else
+                {
+                    int up=0,left=0;
+                    if(i>0)
+                    up=dp[i-1][j];
+                    if(j>0)
+                    left=dp[i][j-1];
+                    
+                    dp[i][j]=left+up;
+                }
+            }
+        }
+        
+        
+        
+        
+        return dp[a-1][b-1];
     }
 };
 
