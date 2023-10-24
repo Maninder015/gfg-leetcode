@@ -9,34 +9,69 @@ using namespace std;
 class Solution {
   public:
     int modu=pow(10,9)+7;
-    int func(int m,int n,vector<vector<int>> &grid,vector<vector<int>> &dp)
-    {
-        if(m==0 && n==0)
-        return 1;
+    // int func(int m,int n,vector<vector<int>> &grid,vector<vector<int>> &dp)
+    // {
+    //     if(m==0 && n==0)
+    //     return 1;
         
-        if(m<0 || n<0)
-        return 0;
+    //     if(m<0 || n<0)
+    //     return 0;
         
-        if(grid[m][n]==0)
-        return 0;
+    //     if(grid[m][n]==0)
+    //     return 0;
         
-        if(dp[m][n]!=-1)
-        return dp[m][n];
+    //     if(dp[m][n]!=-1)
+    //     return dp[m][n];
         
-        int up=func(m-1,n,grid,dp);
-        int left=func(m,n-1,grid,dp);
+    //     int up=func(m-1,n,grid,dp);
+    //     int left=func(m,n-1,grid,dp);
         
-        return dp[m][n]=(((up%modu)+(left%modu))%modu);
+    //     return dp[m][n]=(((up%modu)+(left%modu))%modu);
         
-    }
+    // }
     
     int uniquePaths(int n, int m, vector<vector<int>> &grid) 
     {
         if(grid[0][0]==0 || grid[n-1][m-1]==0)
         return 0;
         
-        vector<vector<int>> dp(n,vector<int> (m,-1));
-        return func(n-1,m-1,grid,dp)%modu;
+        vector<vector<int>> dp(n,vector<int> (m,0));
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(i==0 && j==0)
+                dp[i][j]=1;
+                else if(grid[i][j]==0)
+                dp[i][j]=0;
+                else
+                {
+                    int up=0;
+                    int left=0;
+                    
+                    if(i>0)
+                    up=dp[i-1][j];
+                    if(j>0)
+                    left=dp[i][j-1];
+                    
+                    dp[i][j]=(((up%modu)+(left%modu))%modu);
+                }
+            }
+        }
+        
+        
+        
+        return dp[n-1][m-1];
+        
+        
+        
+        
+        
+        
+        
+        
+        // return func(n-1,m-1,grid,dp)%modu;
         
     }
 };
